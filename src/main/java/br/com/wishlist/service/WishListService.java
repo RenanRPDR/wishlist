@@ -9,9 +9,11 @@ import java.util.Optional;
 
 public interface WishListService {
 
-    WishListResponse create(WishListRequest request);
+    WishListResponse createProduct(WishListRequest request);
 
-    List<WishListResponse> getAll();
+    List<WishListResponse> getAllProducts();
 
     Optional<Product> getProductById(String id);
+
+    void deleteProductById(String id);
 }

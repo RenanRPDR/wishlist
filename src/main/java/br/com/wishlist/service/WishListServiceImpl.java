@@ -17,21 +17,19 @@ public class WishListServiceImpl implements WishListService {
     private WishListRepository repository;
 
     @Override
-    public WishListResponse create(WishListRequest request) {
-        Product product = new Product();
-//        product.setId(UUID.randomUUID().toString());
-        product.setName(request.getName());
-        product.setDescription(request.getDescription());
-        product.setQuantity(request.getQuantity());
-        repository.save(product);
+    public WishListResponse createProduct(WishListRequest request) {
+            Product product = new Product();
+            product.setName(request.getName());
+            product.setDescription(request.getDescription());
+            product.setQuantity(request.getQuantity());
+            repository.save(product);
 
-        return createResponse(product);
+            return createResponse(product);
     }
 
     @Override
-    public List<WishListResponse> getAll() {
+    public List<WishListResponse> getAllProducts() {
         List<WishListResponse> response = new ArrayList<>();
-
         List<Product> products = repository.findAll();
         if(!products.isEmpty()) {
             products.forEach(product -> response.add(createResponse(product)));
@@ -43,6 +41,11 @@ public class WishListServiceImpl implements WishListService {
     public Optional<Product> getProductById(String id) {
         Optional<Product> product = repository.findById(id);
         return product;
+    }
+
+    @Override
+    public void deleteProductById(String id) {
+        repository.deleteById(id);
     }
 
     private WishListResponse createResponse(Product product) {

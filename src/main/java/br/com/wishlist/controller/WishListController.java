@@ -18,22 +18,23 @@ public class WishListController {
     @Autowired
     private WishListService service;
 
-    @GetMapping(path = "/hello")
-    private String helloWorld() {
-        return "Pai ta ON";
-    }
-
     @PostMapping
-    public ResponseEntity<WishListResponse> create(@RequestBody WishListRequest request) {
-        return ResponseEntity.ok(service.create(request));
+    public ResponseEntity<WishListResponse> createProduct(@RequestBody WishListRequest request) {
+
+        return ResponseEntity.ok(service.createProduct(request));
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<Optional<Product>> getProductById(@PathVariable("id") String id) {
+    public ResponseEntity<Optional<Product>> getProductById(@PathVariable("id") String id) {
         return ResponseEntity.ok(service.getProductById(id));
     }
 
-
     @GetMapping
-    public ResponseEntity<List<WishListResponse>> getAll() { return ResponseEntity.ok(service.getAll()); }
+    public ResponseEntity<List<WishListResponse>> getAllProducts() { return ResponseEntity.ok(service.getAllProducts()); }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteProductById(@PathVariable("id") String id) {
+        service.deleteProductById(id);
+        return ResponseEntity.ok().build();
+    }
 }
